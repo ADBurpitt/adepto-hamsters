@@ -4,13 +4,12 @@
   "description": "This is a sample template for sam-app - Below is a brief explanation of what we have generated for you:",
   "main": "index.js",
   "scripts": {
-    "test": "mocha src/ --recursive"
+    "test": "mocha src/**/tests/*"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "chai": "^4.2.0",
-    "mocha": "^6.0.2",
-    "tape": "^4.10.1"
+    "mocha": "^6.0.2"
   }
 }
