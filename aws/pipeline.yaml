@@ -18,7 +18,7 @@ Parameters:
     Description: "Github repo owner"
   GithubRepo:
     Type: String
-    Default: idek-rn-bro
+    Default: adepto-hamsters
     Description: "Github repo name"
   GithubOAuthToken:
     Type: String
@@ -150,10 +150,7 @@ Resources:
               Configuration:
                 Owner: !Ref GithubOwner
                 Repo: !Ref GithubRepo
-                Branch: !If
-                  - isProd
-                  - master
-                  - develop
+                Branch: master
                 OAuthToken: !Ref GithubOAuthToken
               RunOrder: 1
         

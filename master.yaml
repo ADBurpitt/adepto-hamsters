@@ -12,7 +12,7 @@ Parameters:
 
   ProjectSource:
     Type: String
-    Default: "https://github.com/adburpitt/idek-rn-bro"
+    Default: "https://github.com/adburpitt/adepto-hamsters"
     Description: "Source URL"
   GithubOwner:
     Type: String
@@ -20,7 +20,7 @@ Parameters:
     Description: "Github repo owner"
   GithubRepo:
     Type: String
-    Default: idek-rn-bro
+    Default: adepto-hamsters
     Description: "Github repo name"
   GithubOAuthToken:
     Type: String
