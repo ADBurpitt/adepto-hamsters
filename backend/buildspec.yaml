@@ -4,10 +4,12 @@ phases:
 
   install:
     commands:
+      - ls
       - cd ${CODEBUILD_SRC_DIR}/backend
+      - ls
 
       - echo Installing testing dependanices
-      - npm i
+      - npm install
 
       - echo Installing function dependanices
       - chmod +x ./build.sh
