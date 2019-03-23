@@ -4,9 +4,7 @@ phases:
 
   install:
     commands:
-      - ls
       - cd ${CODEBUILD_SRC_DIR}/backend
-      - ls
 
       - echo Installing testing dependanices
       - npm install
