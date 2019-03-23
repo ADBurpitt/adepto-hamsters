@@ -82,7 +82,7 @@ Resources:
       Environment:
         ComputeType: BUILD_GENERAL1_SMALL
         Type: LINUX_CONTAINER
-        Image: "aws/codebuild/nodejs:10.14.1-1.7.0"
+        Image: "aws/codebuild/nodejs:8.11.0"
         EnvironmentVariables:
           - Name: BUCKET
             Value: !Ref TemplateBucket
