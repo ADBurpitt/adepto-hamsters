@@ -1,0 +1,43 @@
+version: 0.2
+
+phases:
+
+  install:
+    commands:
+      - cd ${CODEBUILD_SRC_DIR}/backend
+
+      - echo Installing testing dependanices
+      - npm i
+
+      - echo Installing function dependanices
+      - chmod +x ./build.sh
+      - ./build.sh
+
+  pre_build:
+    commands:
+      - npm test
+
+  build:
+    commands:
+
+      # Package application with AWS CloudFormation/SAM
+      - aws cloudformation package --template template.yaml --s3-bucket ${BUCKET} --output-template api-package.yaml
+      
+      - pip install docopt PyYAML aws-sam-translator
+      - python sam-translate.py --input-file="api-package.yaml" --output-file="../aws/API.json"
+      
+      - cd ${CODEBUILD_SRC_DIR}/aws
+      
+      - pip install --upgrade awscli
+      - aws cloudformation package --template infrastructure.yaml --s3-bucket ${BUCKET} --output-template output/infrastructure.yaml
+
+      # Inject env variables into config.json
+      - sed -i -e "s/ENV_PLACEHOLDER/$ENVIRONMENT/" output/config.json
+      - sed -i -e "s/DOMAIN_PLACEHOLDER/$DOMAIN/" output/config.json
+      - sed -i -e "s#CERT_PLACEHOLDER#$CERTIFICATE#" output/config.json
+
+artifacts:
+  base-directory: aws/output
+  files:
+    - infrastructure.yaml
+    - config.json
