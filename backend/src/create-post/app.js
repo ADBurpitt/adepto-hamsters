@@ -12,10 +12,11 @@ exports.lambdaHandler = async (event, context) => {
       Item: {
         uuid,
         user_id: event.requestContext.authorizer.claims.sub,
+        email: event.requestContext.authorizer.claims.email,
         title: body.title,
         text: body.text,
-        timestamp: Date.now(),
-        likes: []
+        likes: [],
+        timestamp: Date.now()
       }
     }).promise()
 
