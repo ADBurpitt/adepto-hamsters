@@ -4,7 +4,11 @@ const app = require('../../app.js');
 const chai = require('chai');
 const expect = chai.expect;
 
-const event = { authorizer: { claims: {} } }
+const event = {
+  requestContext: {
+    authorizer: { claims: {} }
+  }
+}
 const context = {}
 
 describe('Tests index', function () {
