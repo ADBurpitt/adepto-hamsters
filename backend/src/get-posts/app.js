@@ -4,7 +4,11 @@
 const AWS = require('aws-sdk')
 
 exports.lambdaHandler = async (event, context) => {
+    console.log(event, context);
+
     try {
+
+      let sub;
 
       if (event.requestContext.authorizer) {
         sub = event.requestContext.authorizer.claims.sub;
