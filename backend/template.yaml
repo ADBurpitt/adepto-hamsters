@@ -104,6 +104,22 @@ Resources:
           TABLE_NAME: !Ref PostsTableName
       Role: !GetAtt LambdaPostsTableRole.Arn
 
+  LikePostFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/like-post/
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /posts/likes
+            Method: POST
+      Environment: 
+        Variables:
+          TABLE_NAME: !Ref PostsTableName
+      Role: !GetAtt LambdaPostsTableRole.Arn
+
 Outputs:
   HelloWorldAPI:
     Description: "API Gateway endpoint URL for Prod environment for First Function"
