@@ -9,18 +9,6 @@ Resources:
         -
           AttributeName: "uuid"
           AttributeType: "S"
-        -
-          AttributeName: "timestamp"
-          AttributeType: "S"
-        -
-          AttributeName: "user_id"
-          AttributeType: "S"
-        -
-          AttributeName: "title"
-          AttributeType: "S"
-        -
-          AttributeName: "text"
-          AttributeType: "S"
       KeySchema:
         -
           AttributeName: "uuid"
