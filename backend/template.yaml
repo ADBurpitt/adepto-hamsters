@@ -57,7 +57,7 @@ Resources:
                 Resource: "*"
 
   HelloWorldFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
       CodeUri: src/hello-world/
       # Tracing: Active # https://docs.aws.amazon.com/lambda/latest/dg/lambda-x-ray.html
@@ -73,7 +73,7 @@ Resources:
           PARAM1: VALUE
   
   GetPostsFunction:
-    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Type: AWS::Serverless::Function
     Properties:
       CodeUri: src/get-posts/
       Events:
@@ -83,6 +83,22 @@ Resources:
             RestApiId: !Ref RestApi
             Path: /posts
             Method: GET
+      Environment: 
+        Variables:
+          TABLE_NAME: !Ref PostsTableName
+      Role: !GetAtt LambdaPostsTableRole.Arn
+
+  CreatePostFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/create-post/
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /posts
+            Method: PUT
       Environment: 
         Variables:
           TABLE_NAME: !Ref PostsTableName
