@@ -130,6 +130,10 @@ Resources:
                 Action: "dynamodb:*"
                 Resource: "*"
 
+              - Effect: "Allow"
+                Action: "application-autoscaling:*"
+                Resource: "*"
+
   Pipeline:
     Type: "AWS::CodePipeline::Pipeline"
     DependsOn:
