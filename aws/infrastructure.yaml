@@ -22,6 +22,11 @@ Resources:
       Parameters:
         Environment: !Ref Environment
 
+  Database:
+    Type: "AWS::CloudFormation::Stack"
+    Properties:
+      TemplateURL: database.yaml
+
   API:
     Type: "AWS::CloudFormation::Stack"
     DependsOn: Cognito
@@ -29,6 +34,8 @@ Resources:
       TemplateURL: API.json
       Parameters:
         UserPoolArn: !GetAtt Cognito.Outputs.UserPoolArn
+        PostsTableName: !GetAtt Database.Outputs.PostsTableName
+        PostsTableArn: !GetAtt Database.Outputs.PostsTableArn
   
   ApiDNS:
     Type: "AWS::CloudFormation::Stack"

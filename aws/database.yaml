@@ -83,3 +83,9 @@ Resources:
         ScaleOutCooldown: 60
         PredefinedMetricSpecification:
           PredefinedMetricType: DynamoDBWriteCapacityUtilization
+
+Outputs:
+  PostsTableName:
+    Value: !Ref Posts
+  PostsTableArn:
+    Value: !GetAtt Posts.Arn
