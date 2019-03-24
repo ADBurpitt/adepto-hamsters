@@ -4,7 +4,6 @@
 const AWS = require('aws-sdk')
 
 exports.lambdaHandler = async (event, context) => {
-    console.log(event, context)
     const documentClient = new AWS.DynamoDB.DocumentClient()
 
     let error;
@@ -12,7 +11,7 @@ exports.lambdaHandler = async (event, context) => {
 
     await documentClient.scan(
       { TableName: process.env.TABLE_NAME },
-      (err, data) => {
+      (err, { data }) => {
         if (err) error = data;
         else scanData = data;
       }
@@ -25,9 +24,7 @@ exports.lambdaHandler = async (event, context) => {
           'Content-Type': 'application/json',
           "Access-Control-Allow-Origin": "*"
         },
-        'body': JSON.stringify({
-            'message': err
-        })
+        'body': JSON.stringify({ 'message': err })
       }
     } else {
       return {
