@@ -15,20 +15,17 @@ let response;
  * 
  */
 exports.lambdaHandler = async (event, context) => {
-    try {
-        // const ret = await axios(url);
-        response = {
-            'statusCode': 200,
-            'headers': {"Access-Control-Allow-Origin": "*"},
-            'body': JSON.stringify({
-                message: 'hello world',
-                // location: ret.data.trim()
-            })
-        }
-    } catch (err) {
-        console.log(err);
-        return err;
-    }
+  console.log(event);
+  try {
+      response = {
+          'statusCode': 200,
+          'headers': {"Access-Control-Allow-Origin": "*"},
+          'body': JSON.stringify({ message: 'hello world' })
+      }
+  } catch (err) {
+      console.log(err);
+      return err;
+  }
 
-    return response
+  return response
 };
