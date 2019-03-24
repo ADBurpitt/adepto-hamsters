@@ -31,7 +31,7 @@ Resources:
         Authorizers:
           Cognito:
             UserPoolArn: !Ref UserPoolArn
-  
+            
   LambdaPostsTableRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -39,11 +39,11 @@ Resources:
         Version: '2012-10-17'
         Statement:
           - Effect: Allow
-          Principal:
-            Service:
-            - lambda.amazonaws.com
-          Action:
-          - sts:AssumeRole
+            Principal:
+              Service:
+              - lambda.amazonaws.com
+            Action:
+            - sts:AssumeRole
       Policies:
         - PolicyName: "CodePipelineAccessPolicy"
           PolicyDocument:
