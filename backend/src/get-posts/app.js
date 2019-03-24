@@ -4,30 +4,41 @@
 const AWS = require('aws-sdk')
 
 exports.lambdaHandler = async (event, context) => {
-    console.log(event, context);
+    console.log(event, context)
+    const documentClient = new AWS.DynamoDB.DocumentClient()
 
-    try {
-      const documentClient = new AWS.DynamoDB.DocumentClient();
-      const data = await documentClient.query({
-        TableName: process.env.TABLE_NAME,
-        IndexName: "uuid",
-        Select: "ALL_ATTRIBUTES"
-      }).promise();
+    let error;
+    let scanData;
 
-      response = {
-          'statusCode': 200,
-          'headers': {
-            'Content-Type': 'application/json',
-            "Access-Control-Allow-Origin": "*"
-          },
-          'body': JSON.stringify({
-              'data': data || []
-          })
+    await documentClient.scan(
+      { TableName: process.env.TABLE_NAME },
+      (err, data) => {
+        if (err) error = data;
+        else scanData = data;
       }
-    } catch (err) {
-        console.log(err)
-        return err
-    }
+    ).promise()
 
-    return response
+    if (error) {
+      return {
+        'statusCode': 502,
+        'headers': {
+          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*"
+        },
+        'body': JSON.stringify({
+            'message': err
+        })
+      }
+    } else {
+      return {
+        'statusCode': 200,
+        'headers': {
+          'Content-Type': 'application/json',
+          "Access-Control-Allow-Origin": "*"
+        },
+        'body': JSON.stringify({
+            'data': scanData || []
+        })
+      }
+    }
 }
