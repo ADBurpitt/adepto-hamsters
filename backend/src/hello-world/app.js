@@ -15,7 +15,7 @@ let response;
  * 
  */
 exports.lambdaHandler = async (event, context) => {
-  console.log(event);
+  console.log(event.authorizer.claims);
   try {
       response = {
           'statusCode': 200,
