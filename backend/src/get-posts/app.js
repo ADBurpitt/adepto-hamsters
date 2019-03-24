@@ -7,35 +7,23 @@ exports.lambdaHandler = async (event, context) => {
     console.log(event, context);
 
     try {
+      const documentClient = new AWS.DynamoDB.DocumentClient();
+      const data = await documentClient.query({
+        TableName: process.env.TABLE_NAME,
+        IndexName: "uuid",
+        Select: "ALL_ATTRIBUTES"
+      }).promise();
 
-      let sub;
-
-      if (event.requestContext.authorizer) {
-        sub = event.requestContext.authorizer.claims.sub;
-        const params = {
-            TableName: process.env.TableName,
-            Item: {
-                'user_id': sub,
-            }
-        };
-
-        // Making the call to the dynamo db table with our parameters and asking for a promise back.
-        // Since we're using async await, the code wont continue to execute until a result has been received.
-        const documentClient = new AWS.DynamoDB.DocumentClient();
-        await documentClient.put(params).promise();
-    }
-
-        // const ret = await axios(url)
-        response = {
-            'statusCode': sub ? 200 : 401,
-            'headers': {
-              'Content-Type': 'application/json',
-              "Access-Control-Allow-Origin": "*"
-            },
-            'body': JSON.stringify({
-                'sub': sub || 'Unauthorized'
-            })
-        }
+      response = {
+          'statusCode': 200,
+          'headers': {
+            'Content-Type': 'application/json',
+            "Access-Control-Allow-Origin": "*"
+          },
+          'body': JSON.stringify({
+              'data': data || []
+          })
+      }
     } catch (err) {
         console.log(err)
         return err
