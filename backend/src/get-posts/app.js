@@ -11,7 +11,7 @@ exports.lambdaHandler = async (event, context) => {
 
     await documentClient.scan(
       { TableName: process.env.TABLE_NAME },
-      (err, { data }) => {
+      (err, data) => {
         if (err) error = data;
         else scanData = data;
       }
