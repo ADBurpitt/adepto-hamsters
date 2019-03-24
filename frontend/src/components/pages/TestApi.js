@@ -23,7 +23,7 @@ class TestApi extends Component {
       const { data } = await axios.get(`${API_URL}/hello`, { headers: { 'Authorization': this.state.token } })
       this.setState({ helloWorld: { data: data.message, status: 'success' } })
     } catch (err) {
-      console.log(err)
+      console.error(err)
       // this.setState({ helloWorld: { error: err.response.data.message, status: 'danger' } })
     }
   }
