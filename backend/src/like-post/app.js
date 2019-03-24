@@ -9,7 +9,7 @@ exports.lambdaHandler = async (event, context) => {
 
     const post = await docClient.get({
       TableName: process.env.TABLE_NAME,
-      Key: { HashKey: body.postId }
+      Key: { uuid: body.postId }
     }).promise()
 
     console.log(post)
