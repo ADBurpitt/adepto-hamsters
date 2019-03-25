@@ -8,16 +8,16 @@ exports.lambdaHandler = async (event, context) => {
 
   try {
 
-    const post = await docClient.get({
+    const { Item } = await docClient.get({
       TableName: process.env.TABLE_NAME,
       Key: { uuid: body.postId }
     }).promise()
 
-    console.log(post)
+    console.log(Item)
 
-    const likes = post.likes.includes(sub)
-      ? post.likes.filter(id => id !== sub)
-      : [ ...post.likes, sub ]
+    const likes = Item.likes.includes(sub)
+      ? Item.likes.filter(id => id !== sub)
+      : [ ...Item.likes, sub ]
 
     console.log(likes)
 
