@@ -3,6 +3,8 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 import { signout } from 'store/actions/auth'
 
+import hamster from 'assets/hamster-logo.png'
+
 import {
   Collapse,
   Navbar,
@@ -30,9 +32,6 @@ class NavigationBar extends Component {
         <DropdownItem tag={Link} to="/profile" >
           My Profile
         </DropdownItem>
-        <DropdownItem tag={Link} to="/settings" >
-          Settings
-        </DropdownItem>
         <DropdownItem divider />
         <DropdownItem onClick={this.props.signout} >
           Sign out
@@ -42,9 +41,6 @@ class NavigationBar extends Component {
   
   navLinks = () =>
     <>
-      <NavItem>
-        <NavLink tag={Link} to='/test-api' >Test API</NavLink>
-      </NavItem>
       { this.profileDropdown() }
     </>
 
@@ -59,14 +55,13 @@ class NavigationBar extends Component {
     </>
 
   render() {
-    console.log(this.props)
     return (
         <Navbar color="light" light expand="md">
-          <NavbarBrand tag={Link} to='/'>reactstrap</NavbarBrand>
+          <NavbarBrand tag={Link} to='/'><img style={{height: 40}} src={hamster} alt="hamster-logo" />Hamster Town</NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
-              { 
+              {
                 !this.props.loading && (
                   this.props.user
                   ? this.navLinks()
