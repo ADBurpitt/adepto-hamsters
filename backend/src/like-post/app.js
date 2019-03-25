@@ -13,7 +13,9 @@ exports.lambdaHandler = async (event, context) => {
       Key: { uuid: body.postId }
     }).promise()
 
-    const likes = post.likes.contains(sub)
+    console.log(post)
+
+    const likes = post.likes.includes(sub)
       ? post.likes.filter(id => id !== sub)
       : [ ...post.likes, sub ]
 
@@ -38,6 +40,7 @@ exports.lambdaHandler = async (event, context) => {
       'body': JSON.stringify({ data })
     }
   } catch (error) {
+    console.log(error)
     return {
       'statusCode': 502,
       'headers': {
