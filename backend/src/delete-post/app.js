@@ -8,7 +8,7 @@ exports.lambdaHandler = async (event, context) => {
   try {
     const data = await documentClient.delete({
       TableName: process.env.TABLE_NAME,
-      Key: { Key: { uuid: postId } },
+      Key: { uuid: postId },
       ConditionExpression: "user_id = :sub",
       ExpressionAttributeValues: { ":sub": sub },
       ReturnValues: "ALL_OLD"
