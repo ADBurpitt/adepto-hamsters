@@ -2,12 +2,10 @@ const AWS = require('aws-sdk')
 const nanoid = require('nanoid')
 
 exports.lambdaHandler = async (event, context) => {
-  console.log(event.queryStringParameters)
-
   const sub = event.requestContext.authorizer.claims.sub
   const body = JSON.parse(event.body)
 
-  console.log(body)
+  console.log(event)
 
   const documentClient = new AWS.DynamoDB.DocumentClient()
 
