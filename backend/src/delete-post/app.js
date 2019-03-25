@@ -1,18 +1,14 @@
 const AWS = require('aws-sdk')
-const nanoid = require('nanoid')
 
 exports.lambdaHandler = async (event, context) => {
   const sub = event.requestContext.authorizer.claims.sub
-  const body = JSON.parse(event.body)
-
-  console.log(event)
-
+  const { postId } = event.pathParameters
   const documentClient = new AWS.DynamoDB.DocumentClient()
 
   try {
     const data = await documentClient.delete({
       TableName: process.env.TABLE_NAME,
-      Key: { Key: { uuid: body.postId } },
+      Key: { Key: { uuid: postId } },
       ConditionExpression: "user_id == :sub",
       ExpressionAttributeValues: { ":sub": sub },
       ReturnValues: "ALL_OLD"
