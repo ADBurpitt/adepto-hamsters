@@ -35,8 +35,8 @@ class Signup extends Component {
     try {
       await Auth.signUp(email, password)
       await Auth.signIn(email, password)
-      this.props.authUser()
-      console.log('success')
+      const user = await Auth.currentAuthenticatedUser()
+      this.props.authUser(user)
     } catch (error) {
       this.setState({ error })
     }
