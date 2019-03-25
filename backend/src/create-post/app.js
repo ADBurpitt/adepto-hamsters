@@ -29,6 +29,7 @@ exports.lambdaHandler = async (event, context) => {
       'body': JSON.stringify({ 'uuid': uuid })
     }
   } catch (error) {
+    console.error(error)
     return {
       'statusCode': 502,
       'headers': {

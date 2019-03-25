@@ -18,6 +18,7 @@ exports.lambdaHandler = async (event, context) => {
     ).promise()
 
     if (error) {
+      console.error(error)
       return {
         'statusCode': 502,
         'headers': {
