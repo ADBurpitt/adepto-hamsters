@@ -17,12 +17,17 @@ exports.lambdaHandler = async (event, context) => {
       ? post.likes.filter(id => id !== sub)
       : [ ...post.likes, sub ]
 
-    await docClient.update({
+    console.log(likes)
+
+    const data = await docClient.update({
       TableName: process.env.TABLE_NAME,
       Key: { uuid: body.postId },
       UpdateExpression: "set likes = :l",
-      ExpressionAttributeValues: { ":l": likes }
-    })
+      ExpressionAttributeValues: { ":l": likes },
+      ReturnValues: "UPDATED_NEW"
+    }).promise()
+
+    console.log(data)
 
     return {
       'statusCode': 200,
@@ -30,7 +35,7 @@ exports.lambdaHandler = async (event, context) => {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*'
       },
-      'body': JSON.stringify({ count: likes.length })
+      'body': JSON.stringify({ data })
     }
   } catch (error) {
     return {
