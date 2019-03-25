@@ -1,5 +1,9 @@
 const AWS = require('aws-sdk')
-const nanoid = require('nanoid')
+
+exports.updateLikes = (list, val) =>
+  list.includes(val)
+    ? list.filter(e => e !== val)
+    : [ ...list, val ]
 
 exports.lambdaHandler = async (event, context) => {
   const sub = event.requestContext.authorizer.claims.sub
@@ -15,7 +19,9 @@ exports.lambdaHandler = async (event, context) => {
 
     console.log(Item)
 
-    const likes = Item.likes.includes(sub)
+    const likes = updateLikes(Item.likes, sub)
+    
+    Item.likes.includes(sub)
       ? Item.likes.filter(id => id !== sub)
       : [ ...Item.likes, sub ]
 
