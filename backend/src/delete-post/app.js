@@ -5,7 +5,10 @@ exports.lambdaHandler = async (event, context) => {
   console.log(event.queryStringParameters)
 
   const sub = event.requestContext.authorizer.claims.sub
-  const body = JSON.parse(event.body);  
+  const body = JSON.parse(event.body)
+
+  console.log(body)
+
   const documentClient = new AWS.DynamoDB.DocumentClient()
 
   try {
