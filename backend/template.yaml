@@ -104,6 +104,22 @@ Resources:
           TABLE_NAME: !Ref PostsTableName
       Role: !GetAtt LambdaPostsTableRole.Arn
 
+  DeletePostFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: src/create-post/
+      Events:
+        CatchAll:
+          Type: Api
+          Properties:
+            RestApiId: !Ref RestApi
+            Path: /posts
+            Method: DELETE
+      Environment: 
+        Variables:
+          TABLE_NAME: !Ref PostsTableName
+      Role: !GetAtt LambdaPostsTableRole.Arn
+
   LikePostFunction:
     Type: AWS::Serverless::Function
     Properties:
