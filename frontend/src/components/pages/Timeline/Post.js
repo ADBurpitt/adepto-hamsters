@@ -15,7 +15,6 @@ const Post = ({uuid, userId, title, text, likes, email, timestamp, deletePost}) 
         <Col sm={11}>
           <h1 className="display-5">{title} <span style={{fontSize: 12}} className="align-middle text-muted">{email} - {date.toLocaleDateString()}</span></h1>
         </Col>
-        {/* <Col sm={3}><span className="align-middle text-muted">{email} - {date.toLocaleDateString()}</span></Col> */}
         <Col sm={1}><ImgButton src={trash} alt="delete" onClick={() => deletePost(uuid)}/></Col>
       </Row>
       <Row>

@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { fetchPosts, deletePost } from 'api'
 
 import { Container, Row, Col, Jumbotron } from 'reactstrap'
-import { AddButton } from 'style/components'
+import { CoolButton } from 'style/components'
 import Post from './Post'
 
 export class Timeline extends Component {
@@ -15,7 +15,6 @@ export class Timeline extends Component {
     } else {
       try {
         const { Items } = await fetchPosts()
-        console.log(Items)
         this.setState({ items: Items.sort((a, b) => a.timestamp < b.timestamp) })
       } catch (error) {
         console.error(error)
@@ -40,7 +39,7 @@ export class Timeline extends Component {
         <Jumbotron className="margin-top-100">
           <Container className="text-center">
             <h1 className="display-3">Greetings, fellow hamsters!</h1>
-            <AddButton onClick={() => this.props.history.push('/posts/new')} >Create Post</AddButton>
+            <CoolButton onClick={() => this.props.history.push('/posts/new')} >Create Post</CoolButton>
             <hr className="my-2" />
           </Container>
           
