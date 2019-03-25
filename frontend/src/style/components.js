@@ -6,7 +6,7 @@ export const ImgButton = styled.img`
   }
 `
 
-export const AddButton = styled.button`
+export const CoolButton = styled.button`
   margin-top: 20px;
   margin-bottom: 20px;
   background:#1AAB8A;
