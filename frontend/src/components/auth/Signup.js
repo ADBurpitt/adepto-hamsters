@@ -38,7 +38,7 @@ class Signup extends Component {
       const user = await Auth.currentAuthenticatedUser()
       this.props.authUser(user)
     } catch (error) {
-      this.setState({ error })
+      this.setState({ error: error.message })
     }
   }
 
