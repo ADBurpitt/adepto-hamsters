@@ -107,7 +107,7 @@ Resources:
   DeletePostFunction:
     Type: AWS::Serverless::Function
     Properties:
-      CodeUri: src/create-post/
+      CodeUri: src/delete-post/
       Events:
         CatchAll:
           Type: Api
