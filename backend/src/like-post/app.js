@@ -17,15 +17,11 @@ exports.lambdaHandler = async (event, context) => {
       Key: { uuid: body.postId }
     }).promise()
 
-    console.log(Item)
-
     const likes = updateLikes(Item.likes, sub)
     
     Item.likes.includes(sub)
       ? Item.likes.filter(id => id !== sub)
       : [ ...Item.likes, sub ]
-
-    console.log(likes)
 
     const data = await docClient.update({
       TableName: process.env.TABLE_NAME,
@@ -34,8 +30,6 @@ exports.lambdaHandler = async (event, context) => {
       ExpressionAttributeValues: { ":l": likes },
       ReturnValues: "UPDATED_NEW"
     }).promise()
-
-    console.log(data)
 
     return {
       'statusCode': 200,
@@ -46,7 +40,7 @@ exports.lambdaHandler = async (event, context) => {
       'body': JSON.stringify({ data })
     }
   } catch (error) {
-    console.log(error)
+    console.error(error)
     return {
       'statusCode': 502,
       'headers': {
