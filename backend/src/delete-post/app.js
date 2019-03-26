@@ -30,7 +30,7 @@ exports.lambdaHandler = async (event, context) => {
         'Content-Type': 'application/json',
         "Access-Control-Allow-Origin": "*"
       },
-      'body': JSON.stringify({ 'message': error })
+      'body': JSON.stringify(error)
     }
   }
 }
