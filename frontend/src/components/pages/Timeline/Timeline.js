@@ -12,7 +12,7 @@ export class Timeline extends Component {
   async componentDidMount() {
     try {
       const { Items } = await api.fetchPosts()
-      this.setState({ items: Items.sort((a, b) => a.timestamp < b.timestamp) })
+      this.setState({ items: Items.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)) })
     } catch (error) {
       console.error(error)
     }
