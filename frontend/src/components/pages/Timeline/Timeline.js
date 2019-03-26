@@ -10,15 +10,11 @@ export class Timeline extends Component {
   state = { items: [] }
 
   async componentDidMount() {
-    if (this.props.items) { // For testing, kinda hacky
-      this.setState({ ...this.props }) 
-    } else {
-      try {
-        const { Items } = await fetchPosts()
-        this.setState({ items: Items.sort((a, b) => a.timestamp < b.timestamp) })
-      } catch (error) {
-        console.error(error)
-      }      
+    try {
+      const { Items } = await fetchPosts()
+      this.setState({ items: Items.sort((a, b) => a.timestamp < b.timestamp) })
+    } catch (error) {
+      console.error(error)
     }
   }
 

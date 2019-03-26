@@ -1,5 +1,7 @@
 import React from 'react'
-import { shallow } from 'enzyme';
+import { shallow } from 'enzyme'
+import configureStore from 'redux-mock-store'
+import { fetchPosts } from '../../../api'
 
 import { Timeline } from 'components/pages/Timeline/Timeline'
 import Post from 'components/pages/Timeline/Post'
@@ -34,18 +36,32 @@ const items = [
   }
 ]
 
+jest.mock('../../../api', () => {
+  fetchPosts: jest.fn()
+})
+
 describe('Timeline', () => {
+
+  fetchPosts.mockImplementationOnce(() => Promise.resolve({ data: { items } }))
+
+
+  const store = configureStore([])({
+    auth: {
+      loading: true,
+      user: { attributes: { sub: "784910e4-c1bb-42ae-9031-c47e25d57b9f" } }
+    }
+  })
 
   test('It should render a Post component for each item in the list', () => {
     const props = {
       auth: {
         loading: false,
         user: { attributes: { sub: "784910e4-c1bb-42ae-9031-c47e25d57b9f" } }
-      },
-      items
+      }
     }
 
-    const wrapper = shallow(<Timeline {...props} />)
+    const wrapper = shallow(<Timeline store={store} {...props} />)
+    wrapper.setState(items)
 
     expect(wrapper.find(Post)).toHaveLength(items.length)
   })
