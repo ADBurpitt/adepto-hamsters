@@ -7,14 +7,17 @@ Hosted [here](https://app.hamster.hyperboa.com/).
   posts comprising of a title and body, all posts are visible to all users, and all users can express thier
   interest in a post by liking it.
   
-  This allows hamster society to determine the most important happenings within the community.
+  This allows hamster society to determine the most up to date happenings within the community.
+  Posts are sorted by date.
   
 ## Architectural overview:
 
 ### Infrastructure:
 
-  The goal for the project was to be 100% serverless, so the api is collection of lambda functions relying on AWS [sam](https://github.com/awslabs/serverless-application-model) and the [sam-cli](https://github.com/awslabs/aws-sam-cli),
-  the database is an autoscaling dynamoDB table and the frontend is served from a CDN.
+  I thought it would be interesting for this project to be 100% serverless, so the api is a collection of lambda functions behind
+  api gateway relying on AWS [sam](https://github.com/awslabs/serverless-application-model) and the 
+  [sam-cli](https://github.com/awslabs/aws-sam-cli), the database is an autoscaling dynamoDB table and the frontend is served
+  from a CDN.
     
   All resources used by this application are defined in cloudformation templates, the master stack can be found in the
   project's root while it's 2 nested stacks, `Infrastructure` and `Pipeline` are located in the `aws` folder.
@@ -47,7 +50,7 @@ Hosted [here](https://app.hamster.hyperboa.com/).
 ### Backend:
 
   Serverless API using Node.js 8.11, can be tested locally using the sam-cli (this is sometimes buggy, especially when using
-  authorizers, which this project does - cognito. Still in beta though so to be expected).
+  authorizers, which this project does in the form of cognito. Still in beta though so to be expected).
   
   The functions are mostly very simple and some could be replaced by direct mappings between api gateway and dynamoDB.
   
@@ -55,14 +58,14 @@ Hosted [here](https://app.hamster.hyperboa.com/).
 
 ### Frontend:
 
-  Simple create react app (almost no reason not to use CRA as of v2).
+  Simple create react app (CRA v2).
   
   Makes use of a small amount of redux with [redux-observables](https://redux-observable.js.org) and [rxjs](http://reactivex.io).
   
   AWS [Amplify](https://aws-amplify.github.io/docs/js/react) is used as the interface to AWS Cognito, the chosen authentication service.
   
   For styling both sass and [emotion](https://emotion.sh/docs/introduction), chosen over styled-components as slightly
-  smaller, and apprently [faster](https://github.com/jsjoeio/styled-components-vs-emotion).
+  smaller, and apparently [faster](https://github.com/jsjoeio/styled-components-vs-emotion).
   Sass because css is faster than any css-in-js.
   
   Some use of the new react hooks api. Some functional components. Mostly class-based for now, ideally more hooks.
@@ -71,7 +74,12 @@ Hosted [here](https://app.hamster.hyperboa.com/).
 
 ## Unfinished:
   
-  TESTING. Made attempts to show how testing should be gone about but very poor coverage.
+  Integration tests. These could be added to the existing pipeline in the frontend buildspec.yaml, as by that point the infrastructure
+  will all have been deployed, so some simple tests verifying that the lambda functions actually communicate with dynamoDB correctly
+  would be appropriate. Frontend <-> backend integration tests would also be possible here by running the frontend locally.
+  
+  Something like [localstack](https://github.com/localstack/localstack) could also work for integration tests. Although as of yet
+  it still lacks a few kew services such as Cognito.
   
   More control over timeline, sort by likes/timestamp/etc.
   
@@ -84,5 +92,8 @@ Hosted [here](https://app.hamster.hyperboa.com/).
   Serverless applications shine in terms of cost-effectiveness and ease of scalability, as they are able to take advantage
   of a full pay as you go model. Traditionally this has been offset by costs like developer time sunk into working with
   awkward dev environments, but being able to run lambda and api-gateway locally is a huge help.
+  Due to the lack of any local Cognito solutions sam-local doesn't actually boost productivity as much when Cognito has been set up
+  as an API gateway authorizer.
 
-  DynamoDB is quite awkward to work with when compared to many other noSQL databases, but the speed and ease of scaling help make up for it
+  DynamoDB is a little odd when compared to many other noSQL databases (at least at first), but the performance
+  and ease of scaling would help make up for that in a production environment.
