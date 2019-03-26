@@ -9,6 +9,7 @@ import App from 'components/App'
 describe('app', () => {
   const [middleware, state] = [[], { auth: { user: {}, loading: true } }]
   const store = configureStore(middleware)(state)
+
   it('renders without crashing', () => {
     mount(
       <Provider store={store}>
@@ -18,4 +19,6 @@ describe('app', () => {
       </Provider>
     )
   })
+
+  // Routing tests
 })

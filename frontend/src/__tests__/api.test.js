@@ -1,32 +1,47 @@
-import { fetchPosts, createPost, deletPost, toggleLike } from 'api'
 import mockAxios from 'axios'
-import amplify from 'aws-amplify'
-// jest.mock('aws-amplify', () => {
-//     Auth: {
-//         currentSession: jest.fn()
-//     }
-// })
+import mockAmplify from 'aws-amplify'
+import { API_URL } from 'config'
+import { database, auth } from '__fixtures__'
+
+const { fetchPosts, createPost, deletePost, toggleLike } = jest.requireActual('../api')
 
 describe('api', () => {
+  const authToken = auth.user.signInUserSession.idToken.jwtToken
 
-    mockAxios.get.mockImplementationOnce(() => Promise.resolve({ data: { results: "yup" } }))
+  describe('fetchPosts', async () => {
+    let items;
+    beforeAll(async () => {
+      const { Items } = await fetchPosts()
+      items = Items
+    }) // Doesn't run test when fetchPosts is in describe body for soem reason
+    
+    it('fetches posts from the database', () => expect(items).toEqual(database.items))
 
-    it('should fetch posts', () => {
+    it('makes a single axios get request', () => expect(mockAxios.get).toHaveBeenCalledTimes(1))
 
-    })
+    it('uses the correct parameters', () => expect(mockAxios.get).toHaveBeenCalledWith(
+      `${API_URL}/posts`,
+      { headers: { "Authorization": authToken } }
+    ))
+  })
 
-    it('should call the create api with the correct parameters and return the id', async () => {
-        const [title, text] = ["title", "text"]
-        
-        const { data } = await createPost(title, text)
 
-        // expect(data).toEqual(something)
-        expect(mockAxios.put).toHaveBeenCalledTimes(1)
-        // expect(mockAxios.put).toHaveBeenCalledWith(
-        //     "url",
-        //     { params: { ..."things" } }
-        // )
-    })
+  describe('createPost', async () => {
+    const [title, text] = ["title", "text"]
+    await createPost(title, text)
+
+    it('makes a single axios put request', () => expect(mockAxios.put).toHaveBeenCalledTimes(1))
+
+    it('uses the correct parameters', () => expect(mockAxios.put).toHaveBeenCalledWith(
+      `${API_URL}/posts`,
+      { title, text },
+      { headers: { "Authorization": authToken } }
+    ))
+  })
+
+  describe('toggleLike', async () => {  })
+
+  describe('deletePost', async () => {  })
 
 
 })
