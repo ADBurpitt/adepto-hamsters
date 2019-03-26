@@ -7,8 +7,6 @@ import { authUser, unauthUser } from 'store/actions/auth'
 import Navbar from 'components/UI/Navbar'
 
 class App extends Component {
-  state = {  }
-
   componentDidMount = () =>
     Auth.currentAuthenticatedUser()
       .then(data => this.props.authUser(data))

@@ -21,8 +21,7 @@ class CreatePost extends Component {
   
   submitPost = async ({title, text}) => {
     try {
-      const res = await createPost(title, text)
-      console.log(res)
+      await createPost(title, text)
       this.props.history.push('/')
     } catch (error) {
       console.error(error)
