@@ -1,4 +1,9 @@
+import { auth } from '__fixtures__'
+
 export const Auth = {
-    currentSession: () => ({ idToken: 'token' }),
-    currentAuthenticatedUser: async () => ({ user: "mock" })
+    configure: () => ({}),
+    currentSession: () => ({
+      idToken: { jwtToken: auth.user.signInUserSession.idToken.jwtToken }
+    }),
+    currentAuthenticatedUser: async () => ({ user: "mock user" })
 }
