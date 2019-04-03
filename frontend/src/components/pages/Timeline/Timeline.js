@@ -44,10 +44,15 @@ export class Timeline extends Component {
                 {
                   this.state.items.map((item, i) =>
                     <React.Fragment key={item.uuid}>
+                    { console.log(item) }
                       <Post
                         {...item}
                         deletePost={this.deletePost}
-                        userId={!loading && user && user.attributes.sub} />
+                        user={!loading && user && {
+                          id: user.attributes.sub,
+                          email: user.attributes.email
+                        }}
+                      />
                       { i !== (this.state.items.length - 1) && <hr className="my-2" />}
                     </React.Fragment>
                   )

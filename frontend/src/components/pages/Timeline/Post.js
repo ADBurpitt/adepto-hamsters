@@ -5,7 +5,7 @@ import { Container, Row, Col, Button } from 'reactstrap'
 import { ImgButton } from 'style/components'
 import trash from 'assets/trash.svg'
 
-const Post = ({uuid, userId, title, text, likes, email, timestamp, deletePost}) => {
+const Post = ({uuid, user, title, text, likes, email, timestamp, deletePost}) => {
   const [likeState, setLikes] = useState(likes)
   const date = new Date(timestamp)
 
@@ -13,9 +13,19 @@ const Post = ({uuid, userId, title, text, likes, email, timestamp, deletePost}) 
     <Container>
       <Row>
         <Col sm={11}>
-          <h1 className="display-5">{title} <span style={{fontSize: 12}} className="align-middle text-muted">{email} - {date.toLocaleDateString()}</span></h1>
+          <h1 className="display-5">
+            {title}
+            <span style={{fontSize: 12}} className="align-middle text-muted">
+              {email} - {date.toLocaleDateString()}
+            </span>
+          </h1>
         </Col>
-        <Col sm={1}><ImgButton src={trash} alt="delete" onClick={() => deletePost(uuid)}/></Col>
+        { 
+          user.email === email &&
+          <Col sm={1}>
+            <ImgButton src={trash} alt="delete" onClick={() => deletePost(uuid)}/>
+          </Col>
+        }
       </Row>
       <Row>
         <Col><p className="lead">{text}</p></Col>
@@ -25,7 +35,7 @@ const Post = ({uuid, userId, title, text, likes, email, timestamp, deletePost}) 
         <Col>
           <Button
             size="sm"
-            color={likeState.includes(userId) ? "danger" : "success"}
+            color={likeState.includes(user.id) ? "danger" : "success"}
             onClick={async () => {
                 try {
                   const { Attributes } = await toggleLike(uuid)
@@ -35,7 +45,7 @@ const Post = ({uuid, userId, title, text, likes, email, timestamp, deletePost}) 
                 }
               }
             }>
-            {likeState.includes(userId) ? "unlike" : "like"}
+            {likeState.includes(user.id) ? "unlike" : "like"}
           </Button>
         </Col>
       </Row>

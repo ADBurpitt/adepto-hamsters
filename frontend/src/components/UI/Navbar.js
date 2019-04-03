@@ -57,7 +57,10 @@ class NavigationBar extends Component {
   render() {
     return (
         <Navbar color="light" light expand="md">
-          <NavbarBrand tag={Link} to='/'><img style={{height: 40}} src={hamster} alt="hamster-logo" />Hamster Town</NavbarBrand>
+          <NavbarBrand tag={Link} to='/'>
+            <img style={{height: 40}} src={hamster} alt="hamster-logo" />
+            Hamster Town
+          </NavbarBrand>
           <NavbarToggler onClick={this.toggle} />
           <Collapse isOpen={this.state.isOpen} navbar>
             <Nav className="ml-auto" navbar>
