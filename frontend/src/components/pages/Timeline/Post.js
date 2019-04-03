@@ -28,7 +28,7 @@ const Post = ({uuid, userId, title, text, likes, email, timestamp, deletePost}) 
             color={likeState.includes(userId) ? "danger" : "success"}
             onClick={async () => {
                 try {
-                  const { data: { Attributes } } = await toggleLike(uuid)
+                  const { Attributes } = await toggleLike(uuid)
                   setLikes(Attributes.likes)
                 } catch (error) {
                   console.error(error)
