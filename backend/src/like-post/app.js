@@ -1,11 +1,11 @@
 const AWS = require('aws-sdk')
 
-exports.updateLikes = (list, val) =>
+const updateLikes = (list, val) =>
   list.includes(val)
     ? list.filter(e => e !== val)
     : [ ...list, val ]
 
-exports.lambdaHandler = async (event, context) => {
+const lambdaHandler = async (event, context) => {
   const sub = event.requestContext.authorizer.claims.sub
   const body = JSON.parse(event.body);  
   const docClient = new AWS.DynamoDB.DocumentClient()
@@ -50,4 +50,9 @@ exports.lambdaHandler = async (event, context) => {
       'body': JSON.stringify(error)
     }
   }
+}
+
+module.exports = {
+  updateLikes,
+  lambdaHandler
 }
