@@ -44,7 +44,6 @@ export class Timeline extends Component {
                 {
                   this.state.items.map((item, i) =>
                     <React.Fragment key={item.uuid}>
-                    { console.log(item) }
                       <Post
                         {...item}
                         deletePost={this.deletePost}
