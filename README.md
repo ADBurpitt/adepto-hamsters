@@ -1,7 +1,5 @@
 # Adepto Hamsters
 
-Hosted [here](https://app.hamster.hyperboa.com/).
-
 ## Background:
   Hamsters need to be able to share their thoughts and collaborate on new ideas. The platform allows users to make text
   posts comprising of a title and body, all posts are visible to all users, and all users can express thier
